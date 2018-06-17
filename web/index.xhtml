@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:growl autoUpdate="true"/>
+        <h:form id="form">
+            <p:selectOneMenu value="#{ubigeoController.model.departamento}" effect="fold">
+                <f:selectItem itemLabel="Departamento" noSelectionOption="true"/>
+                <f:selectItems value="#{ubigeoController.lstdepartamentos}" var="dep" itemLabel="#{dep.departamento}" itemValue="#{dep.departamento}" />
+                <p:ajax event="change" listener="#{ubigeoController.provincia()}" update="provincia"/>
+            </p:selectOneMenu>
+            <p:selectOneMenu id="provincia" value="#{ubigeoController.model.provincia}" effect="fold">
+                <f:selectItem itemLabel="Provincia" noSelectionOption="true"/>
+                <f:selectItems value="#{ubigeoController.lstprovincia}" var="prov" itemLabel="#{prov.provincia}" itemValue="#{prov.provincia}" />
+                <p:ajax event="change" listener="#{ubigeoController.listar()}" update="data form"/>
+            </p:selectOneMenu>
+            <p:dataTable id="data" value="#{ubigeoController.lstubigeo}" var="ubi" paginator="true" rows="10" rendered="#{ubigeoController.table}">
+                <p:column headerText="Codigo">
+                    <p:outputLabel value="#{ubi.codigo}"/>
+                </p:column>
+                <p:column headerText="Departamento">
+                    <p:outputLabel value="#{ubi.departamento}"/>
+                </p:column>
+                <p:column headerText="Provincia">
+                    <p:outputLabel value="#{ubi.provincia}"/>
+                </p:column>
+                <p:column headerText="Distrito">
+                    <p:outputLabel value="#{ubi.distrito}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+
